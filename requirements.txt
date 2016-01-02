@@ -1,0 +1,13 @@
+Flask==0.10.1
+Jinja2==2.8
+MarkupSafe==0.23
+Werkzeug==0.11.3
+apiclient==1.0.2
+argparse==1.2.1
+distribute==0.6.24
+httplib2==0.9.2
+itsdangerous==0.24
+requests==2.9.1
+urllib3==1.14
+wheel==0.24.0
+wsgiref==0.1.2

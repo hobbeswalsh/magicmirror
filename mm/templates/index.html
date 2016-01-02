@@ -1,0 +1,23 @@
+<html>
+    <title>Robin's awesome web page</title>
+    <head>
+        <link rel="stylesheet" href="static/weather-icons-master/css/weather-icons.min.css">
+    </head>
+    <div>
+        <p>My internet page</p>
+    </div>
+    <div>
+        <p>{{ greeting.greeting }}</p>
+    </div>
+    <div>
+        <i class="wi wi-night-sleet"></i>
+        <p>{{ schedule }}</p>
+    </div>
+    <div>
+        <ul>
+            {% for day in weather.list %}
+            <li>{{ day }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</html>
