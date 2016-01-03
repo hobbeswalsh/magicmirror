@@ -1,4 +1,3 @@
-import datetime
 import random
 
 from werkzeug.contrib.cache import SimpleCache
@@ -22,10 +21,10 @@ GREETINGS = [
     "Are you SURE you want to wear those pants with those shoes?",
 ]
 
+
 def get_greeting():
     greeting = cache.get("greeting")
     if greeting is None:
         greeting = {"greeting": random.choice(GREETINGS)}
         cache.set("greeting", greeting, timeout=cache_time)
     return greeting
-

@@ -1,10 +1,12 @@
-import requests
+import datetime
 
+import requests
 
 WEATHER_API_URL = "http://api.openweathermap.org/data/2.5/forecast/daily"
 WEATHER_API_LOCATION = "Seattle,WA"
 WEATHER_API_KEY = "24ffa004a91a88adcab74f0f74040277"
 
+DEFAULT_WEATHER = "wi-alien"
 WEATHER_CODE_TO_ICON_MAP = {
     200: "wi-storm-showers",
     201: "wi-thunderstorm",
@@ -67,14 +69,37 @@ WEATHER_CODE_TO_ICON_MAP = {
     804: "wi-cloudy",
 }
 
+DAYS = {
+    0: "mon",
+    1: "tue",
+    2: "wed",
+    3: "thu",
+    4: "fri",
+    5: "sat",
+    6: "sun",
+}
+
+
 def get_forecast():
     payload = {
-       "q": WEATHER_API_LOCATION,
-       "appid": WEATHER_API_KEY,
-       "units": "imperial",
+        "q": WEATHER_API_LOCATION,
+        "appid": WEATHER_API_KEY,
+        "units": "imperial",
     }
     response = requests.get(WEATHER_API_URL, params=payload)
     if response.ok:
-        return response.json()
+        result = response.json()
+        for day in result.get("list", []):
+            weather_id = day.get("weather", [{}])[0].get("id")
+            dt = day.get("dt")
+            if weather_id is None:
+                continue
+            day["weather"][0]["icon"] = WEATHER_CODE_TO_ICON_MAP.get(
+                weather_id, DEFAULT_WEATHER)
+            if dt is not None:
+                day["weekday"] = DAYS.get(
+                    datetime.date.fromtimestamp(dt).weekday())
+
+        return result
     else:
         return None

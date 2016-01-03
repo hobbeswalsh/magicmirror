@@ -1,23 +1,36 @@
 <html>
-    <title>Robin's awesome web page</title>
-    <head>
-        <link rel="stylesheet" href="static/weather-icons-master/css/weather-icons.min.css">
-    </head>
-    <div>
-        <p>My internet page</p>
-    </div>
-    <div>
-        <p>{{ greeting.greeting }}</p>
-    </div>
-    <div>
-        <i class="wi wi-night-sleet"></i>
-        <p>{{ schedule }}</p>
-    </div>
-    <div>
-        <ul>
-            {% for day in weather.list %}
-            <li>{{ day }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+<title>Robin's awesome web page</title>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:700'
+        rel='stylesheet' type='text/css'>
+  <link rel="stylesheet"
+        href="static/weather-icons-master/css/weather-icons.min.css">
+  <link rel="stylesheet" href="static/mm.css">
+</head>
+<div class="column-center">
+  <div class="stick-down">
+    <p>{{ greeting.greeting }}</p>
+  </div>
+</div>
+<div class="column-left">
+  <div class="stick-left">
+    <ul>
+      {%  for event in schedule.events %}
+      <li>{{ event.summary }}</li>
+        <li class="small">{{ event.attendees|map(attribute='displayName')|join(', ') }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+<div class="column-right">
+  <div class="stick-right">
+    <ul>
+      {% for day in weather.list %}
+        <li class="big">{{ day.temp.max | int }}° / {{ day.temp.min | int }}° <i
+                class="wi {{ day.weather[0].icon }}"
+                style="font-size: xx-large"></i><span style="font-size: small; padding-left: 7px">{{ day.weekday }}</span></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
 </html>

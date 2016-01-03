@@ -1,0 +1,57 @@
+body {
+    background: black;
+    color: white;
+}
+
+ul {
+    list-style: none;
+}
+
+
+li.small {
+    font-family: 'Open Sans', sans-serif;
+    font-size: small;
+    padding-bottom: 3px;
+}
+
+li.big {
+    padding-bottom: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: large;
+}
+
+.column-left {
+    font-family: 'Open Sans', sans-serif;
+    float: left;
+    width: 33%;
+}
+
+.column-right {
+    font-family: 'Open Sans', sans-serif;
+    float: right;
+    position: absolute;
+    width: 33%;
+    right: 5px;
+}
+
+.column-center {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 24px;
+    display: inline-block;
+    width: 33%;
+}
+
+.stick-right {
+    position: absolute;
+    right: 5px;
+}
+
+.stick-left {
+    position: absolute;
+    left: 5px;
+}
+
+.stick-down {
+    position: absolute;
+    bottom: 5px;
+}

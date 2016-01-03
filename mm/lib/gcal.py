@@ -1,16 +1,17 @@
 from __future__ import print_function
-import httplib2
 import os
+import datetime
 
+import httplib2
 from apiclient import discovery
+
 import oauth2client
 from oauth2client import client
 from oauth2client import tools
 
-import datetime
-
 try:
     import argparse
+
     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
 except ImportError:
     flags = None
@@ -43,7 +44,7 @@ def get_credentials():
         flow.user_agent = APPLICATION_NAME
         if flags:
             credentials = tools.run_flow(flow, store, flags)
-        else: # Needed only for compatibility with Python 2.6
+        else:  # Needed only for compatibility with Python 2.6
             credentials = tools.run(flow, store)
         print('Storing credentials to ' + credential_path)
     return credentials
@@ -57,12 +58,15 @@ def get_events(future_days=1, max_results=10):
     now = datetime.datetime.utcnow()
     end = now + datetime.timedelta(days=future_days)
 
-    now_str = now.isoformat() + 'Z' # 'Z' indicates UTC time
+    now_str = now.isoformat() + 'Z'  # 'Z' indicates UTC time
     end_str = end.isoformat() + 'Z'
     eventsResult = service.events().list(
-        calendarId='primary', timeMin=now_str, timeMax=end_str, maxResults=10, singleEvents=True,
+        calendarId='primary', timeMin=now_str, timeMax=end_str, maxResults=10,
+        singleEvents=True,
         orderBy='startTime').execute()
     events = eventsResult.get('items', [])
+    for event in events:
+        start = event["start"].get("dateTime", event["start"].get("date"))
     return {"events": events}
 
 
