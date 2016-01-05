@@ -1,6 +1,6 @@
 from __future__ import print_function
 import os
-import datetime
+import datetime as dt
 
 import httplib2
 from apiclient import discovery
@@ -55,18 +55,29 @@ def get_events(future_days=1, max_results=10):
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
 
-    now = datetime.datetime.utcnow()
-    end = now + datetime.timedelta(days=future_days)
+    now = dt.datetime.utcnow()
+    end = now + dt.timedelta(days=future_days)
 
     now_str = now.isoformat() + 'Z'  # 'Z' indicates UTC time
     end_str = end.isoformat() + 'Z'
-    eventsResult = service.events().list(
+
+    events_result = service.events().list(
         calendarId='primary', timeMin=now_str, timeMax=end_str, maxResults=10,
         singleEvents=True,
         orderBy='startTime').execute()
-    events = eventsResult.get('items', [])
+    events = events_result.get('items', [])
     for event in events:
-        start = event["start"].get("dateTime", event["start"].get("date"))
+        start = event["start"].get("dateTime")
+        if start is not None:
+            start_dt = dt.datetime.strptime(start[:19], '%Y-%m-%dT%H:%M:%S')
+            all_day = False
+        else:
+            start = event["start"].get("date")
+            start_dt = dt.datetime.strptime(start, '%Y-%m-%d')
+            all_day = True
+        event["all_day"] = all_day
+        event["start_dt"] = start_dt
+
     return {"events": events}
 
 

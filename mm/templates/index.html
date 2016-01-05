@@ -1,7 +1,9 @@
 <html>
 <title>Robin's awesome web page</title>
 <head>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:700'
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300'
+        rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Slabo+27px'
         rel='stylesheet' type='text/css'>
   <link rel="stylesheet"
         href="static/weather-icons-master/css/weather-icons.min.css">
@@ -15,9 +17,17 @@
 <div class="column-left">
   <div class="stick-left">
     <ul>
-      {%  for event in schedule.events %}
-      <li>{{ event.summary }}</li>
-        <li class="small">{{ event.attendees|map(attribute='displayName')|join(', ') }}</li>
+      {% for event in schedule.events %}
+        <li class="big"><span
+                style="font-size: small">{{ event.start_dt.month }}/{{ event.start_dt.day }}
+          {% if event.start_dt.hour != 0 %}{{ event.start_dt.hour }}:{{ "%02d"| format(event.start_dt.minute) }}{% endif %}</span>
+          {{ event.summary }}
+          {% if event.location %}
+            <br>
+            <span style="font-size: x-small">  {{ event.location }}</span>
+
+          {% endif %}
+        </li>
       {% endfor %}
     </ul>
   </div>
@@ -28,7 +38,9 @@
       {% for day in weather.list %}
         <li class="big">{{ day.temp.max | int }}° / {{ day.temp.min | int }}° <i
                 class="wi {{ day.weather[0].icon }}"
-                style="font-size: xx-large"></i><span style="font-size: small; padding-left: 7px">{{ day.weekday }}</span></li>
+                style="font-size: xx-large"></i><span
+                style="font-size: small; padding-left: 7px">{{ day.weekday }}</span>
+        </li>
       {% endfor %}
     </ul>
   </div>

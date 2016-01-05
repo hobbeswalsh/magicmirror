@@ -7,27 +7,28 @@ ul {
     list-style: none;
 }
 
+li {
+
+}
 
 li.small {
-    font-family: 'Open Sans', sans-serif;
     font-size: small;
     padding-bottom: 3px;
 }
 
 li.big {
     padding-bottom: 10px;
-    font-family: 'Open Sans', sans-serif;
     font-size: large;
 }
 
 .column-left {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     float: left;
     width: 33%;
 }
 
 .column-right {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     float: right;
     position: absolute;
     width: 33%;
@@ -35,9 +36,9 @@ li.big {
 }
 
 .column-center {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 24px;
-    display: inline-block;
+    /*display: inline-block;*/
     width: 33%;
 }
 
@@ -48,7 +49,7 @@ li.big {
 
 .stick-left {
     position: absolute;
-    left: 5px;
+    left: 1px;
 }
 
 .stick-down {

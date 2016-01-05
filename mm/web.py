@@ -15,7 +15,7 @@ def index():
     real_results = {"greeting": get_greeting()}
     with futures.ProcessPoolExecutor(max_workers=5) as executor:
         results = {
-            executor.submit(get_calendar, 10): "schedule",
+            executor.submit(get_calendar, 3): "schedule",
             executor.submit(get_forecast): "weather",
         }
         for future in futures.as_completed(results):
